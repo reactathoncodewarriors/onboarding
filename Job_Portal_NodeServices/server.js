@@ -27,6 +27,8 @@ app.get('/getAllJobs', createJobContoller.findAll)
 
 app.get('/getjob', createJobContoller.findOne)
 
+app.get('/deletejob', createJobContoller.delete)
+
 
 
 var port=3000;

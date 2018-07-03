@@ -60,25 +60,20 @@ exports.findAll = (req, res) => {
 
 // Find a single note with a noteId
 exports.findOne = (req, res) => {
-    CreateJob.findById(req.params.jobId)
-    .then(job => {
-        if(!job) {
-            return res.status(404).send({
-                message: "Note not found with id " + req.params.jobId
-            });            
-        }
+    
+
+    CreateJob.findOne({ 'jobId': req.query.jobId})
+        .then(job => {
+           
         res.send(job);
     }).catch(err => {
-        if(err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "Note not found with id " + req.params.jobId
-            });                
-        }
-        return res.status(500).send({
-            message: "Error retrieving note with id " + req.params.jobId
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving notes."
         });
     });
-};
+
+
+   };
 
 // Update a note identified by the noteId in the request
 
@@ -86,4 +81,17 @@ exports.findOne = (req, res) => {
 // Delete a note with the specified noteId in the request
 exports.delete = (req, res) => {
 
-};
+ CreateJob.remove({ 'jobId': req.query.jobId})
+        .then(job => {
+            console.log(job)
+        res.send({message: "Note deleted successfully!"});
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving notes."
+        });
+    });
+
+
+   };
+
+// Update a note identified by the noteId in the request
