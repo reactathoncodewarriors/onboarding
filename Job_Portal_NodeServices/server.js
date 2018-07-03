@@ -1,8 +1,8 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser')
-
- const createJobContoller = require('./controllers/createJob.controller.js');
+var redis =require('redis');
+ 
 
 app.use(bodyParser.urlencoded({ extended: false }))
  
@@ -15,10 +15,16 @@ app.use(function(req, res, next) {
   next();
 });
 
+//redisClient=redis.createClient({"host":"localhost","port":6379,"char-set":"utf-8","decode_responses":true})
 
 
 
 
+
+
+const createJobContoller = require('./controllers/createJob.controller.js');
+const MessageContoller = require('./controllers/Messages.contoller.js');
+const UserContoller = require('./controllers/User.controller.js');
 
 app.post('/createJob', createJobContoller.create)
 
@@ -28,6 +34,22 @@ app.get('/getAllJobs', createJobContoller.findAll)
 app.get('/getjob', createJobContoller.findOne)
 
 app.get('/deletejob', createJobContoller.delete)
+
+
+
+app.post('/createMessage', MessageContoller.create)
+
+app.get('/getMessage', MessageContoller.findOne)
+
+
+
+
+
+app.post('/createUser', UserContoller.create)
+
+app.get('/getUser', UserContoller.findOne)
+
+app.get('/getAllUser', UserContoller.findAll)
 
 
 
