@@ -1,6 +1,6 @@
 const CreateJob = require('../models/CreateJob.model.js');
 
-
+var shortid = require('shortid');
 var mongoose = require('mongoose');
 
 //Set up default mongoose connection
@@ -15,9 +15,25 @@ var db = mongoose.connection;
 
 exports.create = (req, res) => {
 
+var id="VZ-"+req.body.location.substring(0,3)+"-"+"Band"+req.body.band+"-"+Math.floor(10000+Math.random()*90000)
+
 	const newJob = new CreateJob({
-        title: req.body.title || "Untitled Job", 
-        content: req.body.content
+
+         jobId: id,
+    jobDescription: req.body.jobDescription,
+    position :req.body.position,
+    band : req.body.band,
+    location:req.body.location,
+    hiringManager : req.body.hiringManager,
+    recuriter :req.body.recuriter,
+    keySkills: req.body.keySkills,
+    secondarySkills:req.body.secondarySkills,
+    startDate:req.body.startDate,
+    endDate:req.body.endDate,
+    createdBy:req.body.createdBy
+
+
+        
     });
     newJob.save()
     .then(data => {
@@ -44,13 +60,28 @@ exports.findAll = (req, res) => {
 
 // Find a single note with a noteId
 exports.findOne = (req, res) => {
-
+    CreateJob.findById(req.params.jobId)
+    .then(job => {
+        if(!job) {
+            return res.status(404).send({
+                message: "Note not found with id " + req.params.jobId
+            });            
+        }
+        res.send(job);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "Note not found with id " + req.params.jobId
+            });                
+        }
+        return res.status(500).send({
+            message: "Error retrieving note with id " + req.params.jobId
+        });
+    });
 };
 
 // Update a note identified by the noteId in the request
-exports.update = (req, res) => {
 
-};
 
 // Delete a note with the specified noteId in the request
 exports.delete = (req, res) => {

@@ -25,6 +25,8 @@ app.post('/createJob', createJobContoller.create)
 
 app.get('/getAllJobs', createJobContoller.findAll)
 
+app.get('/getjob', createJobContoller.findOne)
+
 
 
 var port=3000;

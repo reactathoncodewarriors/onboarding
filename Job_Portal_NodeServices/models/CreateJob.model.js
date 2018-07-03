@@ -11,8 +11,8 @@ const CreateJobSchema = mongoose.Schema({
 	recuriter :String,
 	keySkills: String,
 	secondarySkills:String,
-	startDate:Date,
-	endDate:Date,
+	startDate:String,
+	endDate:String,
 	createdBy:String
  },);
 
