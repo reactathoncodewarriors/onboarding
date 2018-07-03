@@ -15,18 +15,13 @@ var db = mongoose.connection;
 
 exports.create = (req, res) => {
 
-var id="VZ-Guest-User-"+shortid.generate();
-
+    var id="VZ-User-"+shortid.generate();
 	const newUser = new User({
-
-         userId: id,
-    userName: req.body.userName,
-    email :req.body.email,
-    password : req.body.password,
-    role:"Genaral"
-  
-
-        
+        userId: id,
+        userName: req.body.userName,
+        email :req.body.email,
+        password : req.body.password,
+        role:"General"        
     });
     newUser.save()
     .then(data => {
@@ -34,6 +29,23 @@ var id="VZ-Guest-User-"+shortid.generate();
     }).catch(err => {
         res.status(500).send({
             message: err.message || "Some error occurred while creating the Note."
+        });
+    });
+
+};
+
+
+exports.signin = (req, res) => {
+    User.findOne({ 'email': req.body.email, 'password': req.body.password})
+    .then(user => {
+        if (user) {
+            res.send(user);
+        } else {
+            res.status(500).send({"errors":{"email or password":["is invalid"]}});
+        }
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving notes."
         });
     });
 
@@ -52,21 +64,16 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single note with a noteId
-exports.findOne = (req, res) => {
-    
-
-    User.findOne({ 'uesrId': req.query.jobId})
+exports.getUser = (req, res) => {
+    User.findOne({_id:req.query.userId})
         .then(user => {
-           
-        res.send(user);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while retrieving notes."
+             res.send(user);
+        }).catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving notes."
+            });
         });
-    });
-
-
-   };
+};
 
 // Update a note identified by the noteId in the request
 

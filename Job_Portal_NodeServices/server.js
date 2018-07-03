@@ -47,13 +47,15 @@ app.get('/getMessage', MessageContoller.findOne)
 
 app.post('/createUser', UserContoller.create)
 
-app.get('/getUser', UserContoller.findOne)
+app.post('/login', UserContoller.signin)
+
+app.get('/getUser', UserContoller.getUser)
 
 app.get('/getAllUser', UserContoller.findAll)
 
 
 
-var port=3000;
+var port=3333;
 
 
 var server=app.listen(port,function(){
