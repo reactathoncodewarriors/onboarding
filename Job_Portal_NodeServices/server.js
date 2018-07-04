@@ -42,6 +42,7 @@ app.post('/createMessage', MessageContoller.create)
 app.get('/getMessage', MessageContoller.findOne)
 
 
+app.get('/getMessageByJobId', MessageContoller.getListByJobId)
 
 
 

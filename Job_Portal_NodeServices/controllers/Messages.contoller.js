@@ -94,3 +94,20 @@ exports.findOne = (req, res) => {
 
 
 };
+
+
+
+exports.getListByJobId = (req, res) => {
+   
+    Message.find({ 'jobId': req.query.jobId})
+        .then(job => {
+
+            res.send(job);
+        }).catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving notes."
+            });
+        });
+
+
+};
