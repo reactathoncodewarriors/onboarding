@@ -65,7 +65,7 @@ exports.create = (req, res) => {
                     if (err) {
                         res.send(err);
                     }
-                    res.send(raw);
+                    res.send(updatedMessage);
                 });
 
 
