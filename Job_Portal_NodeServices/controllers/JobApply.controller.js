@@ -52,13 +52,13 @@ exports.applyJob = (req, res) => {
                                     let newJobs = jobs.map(job => {
                             
                                         if(appliedJobId.indexOf(job.jobId) > -1) {
-                                            console.log('insied')
+                                           
                                             job["isApplied"] = true;
                                         }
-                                        console.log(job)
+                                      
                                         return job;
                                     })
-                                    console.log("newJobs",newJobs)
+                                   
                                     res.send(newJobs);
                                 });
                             } else {
