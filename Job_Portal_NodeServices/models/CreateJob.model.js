@@ -2,7 +2,8 @@
 const mongoose = require('mongoose');
 
 const CreateJobSchema = mongoose.Schema({
-    jobId: String,
+	jobId: String,
+	isApplied: Boolean,
     jobDescription: String,
     position :String,
     band : String,

@@ -1,5 +1,5 @@
 const CreateJob = require('../models/CreateJob.model.js');
-
+const JobApply = require('../models/JobApply.model.js');
 var shortid = require('shortid');
 var mongoose = require('mongoose');
 
@@ -50,7 +50,26 @@ var id="VZ-"+req.body.location.substring(0,3)+"-"+"Band"+req.body.band+"-"+Math.
 exports.findAll = (req, res) => {
     CreateJob.find()
     .then(jobs => {
-        res.send(jobs);
+        if (req.query.userId) {
+            JobApply.find({ 'userId': req.query.userId }).then(appliedJob => {
+                let appliedJobId = appliedJob.map(job => job.jobId);
+                
+                let newJobs = jobs.map(job => {
+        
+                    if(appliedJobId.indexOf(job.jobId) > -1) {
+                        console.log('insied')
+                        job["isApplied"] = true;
+                    }
+                    console.log(job)
+                    return job;
+                })
+                console.log("newJobs",newJobs)
+                res.send(newJobs);
+            });
+        } else {
+            res.send(jobs);
+        }
+       
     }).catch(err => {
         res.status(500).send({
             message: err.message || "Some error occurred while retrieving notes."
