@@ -2,11 +2,14 @@
 const mongoose = require('mongoose');
 
 const JobApplySchema = mongoose.Schema({
+
+	appliedId:String,
 	userId:String,
-	userName:String,
-	email:String,
-	password:String,
-	role:String
+	jobId:String,
+	isApplied:Boolean,
+	appliedDate:Date,
+	appliedMsg:String,
+	status:String
  });
 
 module.exports = mongoose.model('JobApply', JobApplySchema);

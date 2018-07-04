@@ -25,6 +25,10 @@ app.use(function(req, res, next) {
 const createJobContoller = require('./controllers/createJob.controller.js');
 const MessageContoller = require('./controllers/Messages.contoller.js');
 const UserContoller = require('./controllers/User.controller.js');
+const JobApplyController = require('./controllers/JobApply.controller.js');
+
+
+
 
 app.post('/createJob', createJobContoller.create)
 
@@ -53,6 +57,19 @@ app.post('/login', UserContoller.signin)
 app.get('/getUser', UserContoller.getUser)
 
 app.get('/getAllUser', UserContoller.findAll)
+
+
+
+
+
+app.post('/applyJob', JobApplyController.applyJob)
+
+
+app.get('/viewAppliedJobDetails', JobApplyController.viewAppliedJobDetails)
+
+app.get('/viewAllAppliedJobs', JobApplyController.viewAllAppliedJobs)
+
+
 
 
 

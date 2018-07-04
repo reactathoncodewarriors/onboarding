@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const MessageSchema = mongoose.Schema({
 	jobId:String,
 	userId:String,
+	userName:String,
    userMsg:[{
 	
 
@@ -12,7 +13,6 @@ const MessageSchema = mongoose.Schema({
     		msgData:String,
     		msgDate:String,
     		msgFrom:String,
-    		msgTo:String,
     		isRead:Boolean
 
 
