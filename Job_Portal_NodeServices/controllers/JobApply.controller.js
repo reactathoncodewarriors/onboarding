@@ -50,7 +50,16 @@ exports.applyJob = (req, res) => {
 
 applyJob.save()
     .then(data => {
-        res.send(data);
+
+    	CreateJob.find().
+    	then(jobs => {
+res.send(jobs);
+
+    	}).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while creating the Note."
+        });
+        
     }).catch(err => {
         res.status(500).send({
             message: err.message || "Some error occurred while creating the Note."
