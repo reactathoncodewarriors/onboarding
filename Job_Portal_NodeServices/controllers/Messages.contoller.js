@@ -23,7 +23,7 @@ exports.create = (req, res) => {
         msgId,
         msgData: req.body.msgData,
         msgDate: new Date(),
-        msgFrom: req.body.from,
+        msgFrom: req.body.msgFrom,
         isRead: false
     };
     msgDetailsArr.push(msgDetail);
@@ -33,7 +33,7 @@ exports.create = (req, res) => {
                 const message = new Message({
                     jobId: req.body.jobId,
                     userId: req.body.userId,
-                    msgFrom:req.body.msgFrom,
+                    userName: req.body.userName,
                     userMsg: msgDetailsArr
                 });
 
@@ -57,7 +57,6 @@ exports.create = (req, res) => {
                     _id: msg._id,
                     jobId: req.body.jobId,
                     userId: req.body.userId,
-                     msgFrom:req.body.msgFrom,
                     userMsg: msgArr
                 };
 
