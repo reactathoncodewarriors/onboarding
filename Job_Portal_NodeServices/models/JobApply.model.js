@@ -9,7 +9,18 @@ const JobApplySchema = mongoose.Schema({
 	isApplied:Boolean,
 	appliedDate:Date,
 	appliedMsg:String,
-	status:String
+	status:String,
+	 jobDescription: String,
+    position :String,
+    band : String,
+    location:String,
+	hiringManager : String,
+	recuriter :String,
+	keySkills: String,
+	secondarySkills:String,
+	startDate:String,
+	endDate:String,
+	createdBy:String
  });
 
 module.exports = mongoose.model('JobApply', JobApplySchema);

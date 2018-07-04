@@ -18,19 +18,47 @@ exports.applyJob = (req, res) => {
 
     var id="VZ-AppliedId-"+shortid.generate();
 
-	const applyJob = new JobApply({
+	
+
+    CreateJob.findOne({'jobId':req.body.jobId}).
+       then(jobDesc => {
+
+       	const applyJob = new JobApply({
         appliedId: id,
         userId: req.body.userId,
         jobId :req.body.jobId,
         isApplied : true,
         status:"Applied",
         appliedDate:new Date(),
-        appliedMsg:req.body.appliedMsg        
+        appliedMsg:req.body.appliedMsg  ,
+        jobDescription:jobDesc.jobDescription, 
+       	position :jobDesc.position,
+   	 band : jobDesc.band,
+    location:jobDesc.location,
+	hiringManager : jobDesc.hiringManager,
+	recuriter :jobDesc.recuriter,
+	keySkills: jobDesc.keySkills,
+	secondarySkills:jobDesc.secondarySkills,
+	startDate:jobDesc.startDate,
+	endDate:jobDesc.endDate,
+	createdBy:jobDesc.createdBy     
     });
-    applyJob.save()
+
+
+
+
+
+applyJob.save()
     .then(data => {
         res.send(data);
     }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while creating the Note."
+        });
+    });
+
+
+}).catch(err => {
         res.status(500).send({
             message: err.message || "Some error occurred while creating the Note."
         });
@@ -40,31 +68,12 @@ exports.applyJob = (req, res) => {
 
 
 
-
 exports.viewAppliedJobDetails = (req, res) => {
-    JobApply.findOne({ 'userId': req.query.userId})
-    .then(appliedDetails => {
+
+    JobApply.findOne({ 'userId': req.query.userId,'appliedId':req.query.appliedId})
+    .then(appliedJobs => {
        
-       CreateJob.findOne({'jobId':appliedDetails.jobId}).
-       then(jobDesc => {
-
-       	var obj= {
-
-       jobId:jobDesc.jobId,
-       jobDescription:jobDesc.jobDescription,
-       position:jobDesc.position,
-       	userId:appliedDetails.userId,
-       isApplied:appliedDetails.isApplied,
-       	keySkills:jobDesc.keySkills
-};
-       	res.send(obj);
-
-       }).catch(err => {
-       	res.status(500).send({
-            message: err.message || "Some error occurred while retrieving notes."
-        });
-
-       });
+       res.send(appliedJobs);
     }).catch(err => {
         res.status(500).send({
             message: err.message || "Some error occurred while retrieving notes."
@@ -73,7 +82,6 @@ exports.viewAppliedJobDetails = (req, res) => {
 
 
 };
-
 
 
 
